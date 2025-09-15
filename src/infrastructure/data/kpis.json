@@ -1,0 +1,18 @@
+[
+  { "leaderId": "l1", "year": 2024, "quarter": 1, "dora": { "leadTime": 10, "deployFreq": 4, "mttr": 8, "changeFailRate": 0.12 }, "teamNps": 20, "deliveryPredictability": 0.6 },
+  { "leaderId": "l1", "year": 2024, "quarter": 2, "dora": { "leadTime": 8, "deployFreq": 5, "mttr": 6, "changeFailRate": 0.1 }, "teamNps": 30, "deliveryPredictability": 0.7 },
+  { "leaderId": "l1", "year": 2024, "quarter": 3, "dora": { "leadTime": 7, "deployFreq": 6, "mttr": 5, "changeFailRate": 0.09 }, "teamNps": 35, "deliveryPredictability": 0.78 },
+  { "leaderId": "l1", "year": 2024, "quarter": 4, "dora": { "leadTime": 6, "deployFreq": 7, "mttr": 4, "changeFailRate": 0.08 }, "teamNps": 45, "deliveryPredictability": 0.82 },
+
+  { "leaderId": "l2", "year": 2024, "quarter": 1, "dora": { "leadTime": 12, "deployFreq": 3, "mttr": 10, "changeFailRate": 0.15 }, "teamNps": 10, "deliveryPredictability": 0.55 },
+  { "leaderId": "l2", "year": 2024, "quarter": 2, "dora": { "leadTime": 12, "deployFreq": 3, "mttr": 9, "changeFailRate": 0.15 }, "teamNps": 12, "deliveryPredictability": 0.56 },
+  { "leaderId": "l2", "year": 2024, "quarter": 3, "dora": { "leadTime": 13, "deployFreq": 3, "mttr": 9, "changeFailRate": 0.16 }, "teamNps": 10, "deliveryPredictability": 0.54 },
+  { "leaderId": "l2", "year": 2024, "quarter": 4, "dora": { "leadTime": 12, "deployFreq": 3, "mttr": 9, "changeFailRate": 0.15 }, "teamNps": 15, "deliveryPredictability": 0.57 },
+
+  { "leaderId": "l3", "year": 2024, "quarter": 1, "dora": { "leadTime": 11, "deployFreq": 4, "mttr": 9, "changeFailRate": 0.13 }, "teamNps": 22, "deliveryPredictability": 0.62 },
+  { "leaderId": "l3", "year": 2024, "quarter": 2, "dora": { "leadTime": 9, "deployFreq": 5, "mttr": 7, "changeFailRate": 0.11 }, "teamNps": 28, "deliveryPredictability": 0.7 },
+  { "leaderId": "l3", "year": 2024, "quarter": 3, "dora": { "leadTime": 8, "deployFreq": 6, "mttr": 5, "changeFailRate": 0.09 }, "teamNps": 40, "deliveryPredictability": 0.8 },
+  { "leaderId": "l3", "year": 2024, "quarter": 4, "dora": { "leadTime": 7, "deployFreq": 7, "mttr": 4, "changeFailRate": 0.08 }, "teamNps": 55, "deliveryPredictability": 0.85 }
+]
+
+

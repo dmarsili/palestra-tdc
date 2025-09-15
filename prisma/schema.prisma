@@ -1,0 +1,73 @@
+// Prisma schema for Career Analytics – TDC Leaders (SQLite)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Track {
+  ENGENHARIA
+  DADOS
+  PRODUTO
+}
+
+model Leader {
+  id               String      @id @default(cuid())
+  name             String
+  company          String
+  track            Track
+  seniorityBefore  String
+  seniorityAfter   String?
+  attendedTDC      Boolean
+  talkDate         DateTime
+  sessionNps       Float
+  promoted         Boolean     @default(false)
+  promotionDate    DateTime?
+
+  mentorias        Mentoria[]
+  okrs             OKR[]
+}
+
+model Mentoria {
+  id         String   @id @default(cuid())
+  leaderId   String
+  leader     Leader   @relation(fields: [leaderId], references: [id])
+  startDate  DateTime
+  endDate    DateTime?
+  topics     Json
+  hours      Int
+}
+
+model OKR {
+  id        String   @id @default(cuid())
+  ownerId   String
+  owner     Leader   @relation(fields: [ownerId], references: [id])
+  objective String
+  quarter   String   // e.g., 2025-Q3
+  progress  Float    // 0..1
+  keyResults OKRKeyResult[]
+}
+
+model OKRKeyResult {
+  id          String @id @default(cuid())
+  okrId       String
+  okr         OKR    @relation(fields: [okrId], references: [id])
+  description String
+  target      Float
+  current     Float
+}
+
+model EventoTDC {
+  id               String   @id @default(cuid())
+  city             String
+  date             DateTime
+  track            Track
+  estimatedAudience Int
+}
+
+
+

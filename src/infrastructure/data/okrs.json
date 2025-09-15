@@ -1,0 +1,22 @@
+[
+  {
+    "id": "okr-2025-h2",
+    "period": "2025-H2",
+    "objectives": [
+      { "title": "Elevar maturidade DevOps", "description": "Melhorar métricas DORA" },
+      { "title": "Experimentos com IA", "description": "Aplicar IA no ciclo de entrega" },
+      { "title": "Excelência de Engenharia", "description": "Qualidade e previsibilidade" }
+    ],
+    "keyResults": [
+      { "metric": "Lead time médio (dias)", "target": 7, "current": 8 },
+      { "metric": "Deploys/semana", "target": 6, "current": 5 },
+      { "metric": "MTTR (h)", "target": 6, "current": 7 },
+      { "metric": "Change fail rate", "target": 0.08, "current": 0.1 },
+      { "metric": "NPS do time", "target": 50, "current": 38 },
+      { "metric": "Previsibilidade de entrega", "target": 0.85, "current": 0.78 },
+      { "metric": "Casos de uso IA em produção", "target": 3, "current": 1 }
+    ]
+  }
+]
+
+

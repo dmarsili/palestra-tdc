@@ -1,0 +1,7 @@
+[
+  { "id": "t1", "event": "TDC", "year": 2024, "track": "Arquitetura", "title": "Arquiteturas Evolutivas" },
+  { "id": "t2", "event": "TDC", "year": 2023, "track": "DevOps", "title": "DORA na Prática" },
+  { "id": "t3", "event": "TDC", "year": 2025, "track": "IA", "title": "IA como Copiloto" }
+]
+
+

@@ -1,101 +1,60 @@
-import Image from "next/image";
+import { KpiCard } from "@/ui/components/KpiCard";
+import { FiltersBar } from "@/ui/components/FiltersBar";
+import { TrendLineChart } from "@/ui/components/TrendLineChart";
+import { CohortBarChart } from "@/ui/components/CohortBarChart";
+import { listKpis, listLeaders, listOkrs } from "@/application/services";
+import { OkrProgress } from "@/ui/components/OkrProgress";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const leaders = listLeaders();
+  const kpis = listKpis({ year: 2024 });
+  const okr = listOkrs()[0];
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const avgLeadTime = Math.round(
+    kpis.reduce((acc, k) => acc + k.dora.leadTime, 0) / Math.max(1, kpis.length)
+  );
+  const avgDeploys = (
+    kpis.reduce((acc, k) => acc + k.dora.deployFreq, 0) / Math.max(1, kpis.length)
+  ).toFixed(1);
+
+  const tdcPromotionCohort = leaders.filter((l) => l.attendedTDC && l.promotions > 0).length;
+  const tdcAttended = leaders.filter((l) => l.attendedTDC).length;
+  const cohortPct = tdcAttended ? Math.round((tdcPromotionCohort / tdcAttended) * 100) : 0;
+
+  const trendData = kpis
+    .sort((a, b) => a.quarter - b.quarter)
+    .map((k) => ({ x: `Q${k.quarter}`, y: k.dora.deployFreq }));
+
+  const cohortData = [
+    { label: "Com TDC", value: tdcPromotionCohort },
+    { label: "Sem TDC", value: leaders.filter((l) => !l.attendedTDC && l.promotions > 0).length },
+  ];
+
+  return (
+    <div className="px-6 py-8 space-y-6">
+      <h1 className="text-3xl font-bold">Dashboard de KPIs/OKRs</h1>
+      <p className="text-sm text-gray-500">Demonstração: líderes que participaram do TDC e evolução de carreira.</p>
+
+      <FiltersBar years={[2023, 2024, 2025]} companies={[...new Set(leaders.map((l) => l.company))]} />
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <KpiCard title="Lead time médio (dias)" value={avgLeadTime} tone="good" />
+        <KpiCard title="Deploys/semana" value={avgDeploys} tone="good" />
+        <KpiCard title="% promovidos pós-TDC" value={`${cohortPct}%`} subtitle="Até 12 meses" tone="good" />
+        <KpiCard title="Líderes (total)" value={leaders.length} />
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <TrendLineChart data={trendData} xKey="x" yKey="y" label="Tendência de Deploys (2024)" />
+        <CohortBarChart data={cohortData} xKey="label" yKey="value" label="Promoções por coorte" />
+      </div>
+
+      {okr ? (
+        <div>
+          <h2 className="mt-6 text-xl font-semibold">OKR Atual</h2>
+          <OkrProgress okr={okr} />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      ) : null}
     </div>
   );
 }
