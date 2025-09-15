@@ -1,5 +1,7 @@
 Demo: Dashboard de KPIs/OKRs (TDC + IA)
 
+![Build](https://img.shields.io/badge/build-passing-brightgreen) ![License](https://img.shields.io/badge/license-MIT-blue)
+
 Stack: Next.js (App Router) + TypeScript + Tailwind + Recharts + Zod.
 
 Rodar localmente:
